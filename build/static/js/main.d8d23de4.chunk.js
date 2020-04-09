@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-pack"]=this["webpackJsonpreact-pack"]||[]).push([[0],[,,,function(e,t,r){e.exports=r(4)},function(e,t,r){"use strict";r.r(t);var a=r(0),c=r.n(a),n=r(2),o=r.n(n),s=c.a.createElement("a",{href:"http://reactjs.org",target:"_blank"},"react website");console.log(s),o.a.render(s,document.querySelector("#root"))}],[[3,1,2]]]);
+//# sourceMappingURL=main.d8d23de4.chunk.js.map
