@@ -5,24 +5,22 @@ import styles from './ContactsList.module.css';
 import ContactItem from '../ContactItem/ContactItem';
 import slideTransition from '../../transitions/slideTransition.module.css';
 
-const ContactsList = ({ contacts, onDeleteContact }) => {
-  return (
-    <TransitionGroup component="ul" className={styles.contactList}>
-      {contacts.map(contact => (
-        <CSSTransition
-          key={contact.id}
-          timeout={250}
-          classNames={slideTransition}
-          unmountOnExit
-        >
-          <li className={styles.contactItem}>
-            <ContactItem contact={contact} onDeleteContact={onDeleteContact} />
-          </li>
-        </CSSTransition>
-      ))}
-    </TransitionGroup>
-  );
-};
+const ContactsList = ({ contacts, onDeleteContact }) => (
+  <TransitionGroup component="ul" className={styles.contactList}>
+    {contacts.map(contact => (
+      <CSSTransition
+        key={contact.id}
+        timeout={250}
+        classNames={slideTransition}
+        unmountOnExit
+      >
+        <li className={styles.contactItem}>
+          <ContactItem contact={contact} onDeleteContact={onDeleteContact} />
+        </li>
+      </CSSTransition>
+    ))}
+  </TransitionGroup>
+);
 
 ContactsList.propTypes = {
   contacts: PropTypes.arrayOf(

@@ -27,9 +27,10 @@ export default class App extends Component {
 
   componentDidMount() {
     const persistedContacts = localStorage.getItem('contacts');
+    console.log(persistedContacts);
     if (persistedContacts) {
       const contacts = JSON.parse(persistedContacts);
-      this.setState({ ...contacts });
+      this.setState({ contacts });
     }
   }
   componentDidUpdate(prevProps, prevState) {
@@ -87,8 +88,7 @@ export default class App extends Component {
     }));
   };
 
-  filterContacts = () => {
-    const { contacts, filter } = this.state;
+  filterContacts = (contacts, filter) => {
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase()),
     );
@@ -108,6 +108,7 @@ export default class App extends Component {
 
   render() {
     const { contacts, filter } = this.state;
+    const filteredContacts = this.filterContacts(contacts, filter);
     return (
       <div className={styles.container}>
         <CSSTransition
@@ -131,7 +132,7 @@ export default class App extends Component {
         </CSSTransition>
         <ContactsList
           onDeleteContact={this.handleDeleteContact}
-          contacts={this.filterContacts()}
+          contacts={filteredContacts}
         />
       </div>
     );
