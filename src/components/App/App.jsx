@@ -8,18 +8,11 @@ import ContactsList from '../ContactsList/ContactsList';
 import styles from './App.module.css';
 import slideTitleTransition from '../../transitions/slideTitle.module.css';
 import slideTransition from '../../transitions/slideTransition.module.css';
-
 import {
   NotificationContainer,
   NotificationManager,
 } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-
-// const filterContacts = (contacts, filter) => {
-//   return contacts.filter(contact =>
-//     contact.name.toLowerCase().includes(filter.toLowerCase()),
-//   );
-// };
 
 export default class App extends Component {
   state = {
@@ -47,28 +40,26 @@ export default class App extends Component {
 
   handleAddContact = contact => {
     const { contacts } = this.state;
-    contacts.find(
-      item => item.name.toLowerCase() === contact.name.toLowerCase(),
-    )
-      ? NotificationManager.error(
-          'Please, enter another name',
-          `${contact.name} is already in contacts`,
-          5000,
-        )
-      : this.addContactToState(contact);
+    if (
+      contacts.find(
+        item => item.name.toLowerCase() === contact.name.toLowerCase(),
+      )
+    ) {
+      NotificationManager.error(
+        'Please, enter another name',
+        `${contact.name} is already in contacts`,
+        5000,
+      );
+    } else {
+      this.checkInputValid(contact);
+    }
   };
 
-  addContactToState = contact => {
+  checkInputValid = contact => {
     const { number, name } = contact;
     const isNumber = Number(number);
     if (isNumber && name !== '') {
-      const contactToAdd = {
-        ...contact,
-        id: shortid.generate(),
-      };
-      this.setState(prevState => ({
-        contacts: [...prevState.contacts, contactToAdd],
-      }));
+      this.addContactToState(contact);
     } else if (!isNumber && name === '') {
       NotificationManager.error(
         'Please, enter name or number',
@@ -84,6 +75,16 @@ export default class App extends Component {
     } else if (name === '') {
       NotificationManager.error('Please, enter a name', 'Name is empty', 5000);
     }
+  };
+
+  addContactToState = contact => {
+    const contactToAdd = {
+      ...contact,
+      id: shortid.generate(),
+    };
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, contactToAdd],
+    }));
   };
 
   filterContacts = () => {
